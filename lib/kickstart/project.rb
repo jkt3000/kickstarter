@@ -21,7 +21,7 @@ module Kickstart
     end
     
     def url
-      @url ||= File.join(Kickstart::Base::BASE_URL, link.attribute('href').to_s.split('?').first)
+      @url ||= File.join(Kickstart::BASE_URL, link.attribute('href').to_s.split('?').first)
     end
     
     
@@ -33,7 +33,7 @@ module Kickstart
     end
     
     def thumbnail_url
-      @thumbnail_url ||= node.css('.project-thumbnail img').first.attribute('src')
+      @thumbnail_url ||= node.css('.project-thumbnail img').first.attribute('src').to_s
     end
     
     def pledge_amount
@@ -45,14 +45,26 @@ module Kickstart
     end
     
     # FIXME: make them both dates
+    # can be X days|hours left
+    # or <strong>FUNDED</strong> Aug 12, 2011
     def pledge_deadline
       @pledge_deadline ||= begin
-        date = node.css('.project-stats li').last.css('strong').inner_html.to_s
-        if date.match(/\d+/)
-          (Time.now + (date.to_i * 24 * 60 * 60)).to_s
-        else
-          date.split(/Funded/).strip
+        date = node.css('.project-stats li').last.inner_html.to_s
+        puts "parsing date #{date}"
+        if date =~ /Funded/
+          Date.parse date.split('<strong>Funded</strong>').last.strip
+        elsif date =~ /hours left/
+          future = Time.now + date.match(/\d+/)[0].to_i * 60*60
+          Date.parse(future.to_s)
+        elsif date =~ /days left/
+          Date.parse(Time.now.to_s) + date.match(/\d+/)[0].to_i
         end
+        # if date.match(/\d+/)
+        #   Date.parse(Time.now.to_s) + date.match(/\d+/)[0].to_i
+        # else
+        #   puts "date #{date.to_s}"
+        #   Date.parse date.split(/Funded/).strip
+        # end
       end
     end
     
