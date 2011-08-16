@@ -61,8 +61,9 @@ module Kickstarter
     start_page = options.fetch(:page, 1)
     end_page   = start_page + options.fetch(:pages, 0)
     
-    results = (start_page..end_page).map do |page| 
-      doc = Nokogiri::HTML(open(url))
+    results = (start_page..end_page).map do |page|
+      paged_url = url + "?page=#{page}"
+      doc = Nokogiri::HTML(open(paged_url))
       doc.css('.project').map do |node|
         project = Kickstarter::Project.new(node)
       end

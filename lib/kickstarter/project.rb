@@ -41,7 +41,7 @@ module Kickstarter
     end
     
     def pledge_percent
-      @pledge_percent ||= node.css('.project-stats li strong').inner_html.to_i
+      @pledge_percent ||= node.css('.project-stats li strong').inner_html.gsub(/\,/,"").to_i
     end
     
 
