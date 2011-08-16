@@ -44,7 +44,7 @@ module Kickstart
       @pledge_percent ||= node.css('.project-stats li strong').inner_html.to_i
     end
     
-    # FIXME: make them both dates
+
     # can be X days|hours left
     # or <strong>FUNDED</strong> Aug 12, 2011
     def pledge_deadline
@@ -59,12 +59,6 @@ module Kickstart
         elsif date =~ /days left/
           Date.parse(Time.now.to_s) + date.match(/\d+/)[0].to_i
         end
-        # if date.match(/\d+/)
-        #   Date.parse(Time.now.to_s) + date.match(/\d+/)[0].to_i
-        # else
-        #   puts "date #{date.to_s}"
-        #   Date.parse date.split(/Funded/).strip
-        # end
       end
     end
     

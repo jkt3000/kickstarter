@@ -26,8 +26,8 @@ module Kickstart
   
   Type = {
     :recommended => 'recommended', 
-    :popular => 'popular', 
-    :successful => 'successful'
+    :popular     => 'popular', 
+    :successful  => 'successful'
   }
   
   Lists = {
