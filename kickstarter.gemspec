@@ -1,17 +1,17 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "kickstart/version"
+require "kickstarter/version"
 
 Gem::Specification.new do |s|
-  s.name        = "kickstart"
-  s.version     = Kickstart::VERSION
+  s.name        = "kickstarter"
+  s.version     = Kickstarter::VERSION
   s.authors     = ["John Tajima"]
   s.email       = ["manjiro@gmail.com"]
   s.homepage    = ""
   s.summary     = %q{A simple wrapper for Kickstarter.com}
   s.description = %q{A simple wrapper for kickstarter.com}
 
-  s.rubyforge_project = "kickstart"
+  s.rubyforge_project = "kickstarter"
 
   s.add_dependency "nokogiri"
   s.add_development_dependency "fakeweb"

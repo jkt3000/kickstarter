@@ -1,4 +1,4 @@
 source "http://rubygems.org"
 
-# Specify your gem's dependencies in kickstart.gemspec
+# Specify your gem's dependencies in kickstarter.gemspec
 gemspec

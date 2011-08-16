@@ -1,4 +1,4 @@
-module Kickstart
+module Kickstarter
   
   class Project
     
@@ -21,7 +21,7 @@ module Kickstart
     end
     
     def url
-      @url ||= File.join(Kickstart::BASE_URL, link.attribute('href').to_s.split('?').first)
+      @url ||= File.join(Kickstarter::BASE_URL, link.attribute('href').to_s.split('?').first)
     end
     
     
@@ -45,7 +45,8 @@ module Kickstart
     end
     
 
-    # can be X days|hours left
+
+#     # can be X days|hours left
     # or <strong>FUNDED</strong> Aug 12, 2011
     def pledge_deadline
       @pledge_deadline ||= begin

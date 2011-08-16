@@ -2,10 +2,10 @@ require 'rubygems'
 require "nokogiri"
 require 'open-uri'
 require 'date'
-require "./lib/kickstart/version"
-require "./lib/kickstart/project"
+require "./lib/kickstarter/version"
+require "./lib/kickstarter/project"
 
-module Kickstart
+module Kickstarter
   BASE_URL = "http://kickstarter.com"  
   
   Categories = {
@@ -64,7 +64,7 @@ module Kickstart
     results = (start_page..end_page).map do |page| 
       doc = Nokogiri::HTML(open(url))
       doc.css('.project').map do |node|
-        project = Kickstart::Project.new(node)
+        project = Kickstarter::Project.new(node)
       end
     end
     results.flatten
