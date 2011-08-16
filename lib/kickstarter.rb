@@ -2,8 +2,8 @@ require 'rubygems'
 require "nokogiri"
 require 'open-uri'
 require 'date'
-require "./lib/kickstarter/version"
-require "./lib/kickstarter/project"
+require "kickstarter/version"
+require "kickstarter/project"
 
 module Kickstarter
   BASE_URL = "http://kickstarter.com"  
