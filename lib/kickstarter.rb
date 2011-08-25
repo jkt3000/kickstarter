@@ -9,19 +9,19 @@ module Kickstarter
   BASE_URL = "http://kickstarter.com"  
   
   Categories = {
-    :comics      => "Comics",
-    :dance       => "Dance",
-    :design      => "Design",
-    :fashion     => "Fashion",
-    :film_video  => "Film & Video",
-    :fine_art    => "Fine Art",
-    :food        => "Food",
-    :games       => "Games",
-    :music       => "Music",
-    :photography => "Photography",
-    :technology  => "Technology",
-    :theatre     => "Theater",
-    :writing     => "Writing & Publishing"
+    :art         => "art",
+    :comics      => "comics",
+    :dance       => "dance",
+    :design      => "design",
+    :fashion     => "fashion",
+    :film_video  => "film%20&%20video",
+    :food        => "food",
+    :games       => "games",
+    :music       => "music",
+    :photography => "photography",
+    :technology  => "technology",
+    :theatre     => "theater",
+    :writing     => "writing%20&%20publishing"
   }
   
   Type = {
