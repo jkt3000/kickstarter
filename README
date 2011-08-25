@@ -3,12 +3,10 @@ a simple API for Kickstarter.com
 
 Usage:
 
-  kickstarter = Kickstarter::Base.new(settings)
-  
-  projects = kickstarter.by_category(:games, :page => 1)  
+  projects = Kickstarter.by_category(:games, :page => 1)
     # => returns back an array of projects from page 1
     
-  projects = kickstarter.by_list(:ending_soon, :page => 2, :pages => 3)  
+  projects = Kickstarter.by_list(:ending_soon, :page => 2, :pages => 3)
     # => returns back an array of 3 pages worth of projects, starting from page 2
 
 

@@ -9,19 +9,19 @@ module Kickstarter
   BASE_URL = "http://kickstarter.com"  
   
   Categories = {
-    :comics      => "Comics",
-    :dance       => "Dance",
-    :design      => "Design",
-    :fashion     => "Fashion",
-    :film_video  => "Film & Video",
-    :fine_art    => "Fine Art",
-    :food        => "Food",
-    :games       => "Games",
-    :music       => "Music",
-    :photography => "Photography",
-    :technology  => "Technology",
-    :theatre     => "Theater",
-    :writing     => "Writing & Publishing"
+    :art         => "art",
+    :comics      => "comics",
+    :dance       => "dance",
+    :design      => "design",
+    :fashion     => "fashion",
+    :film_video  => "film%20&%20video",
+    :food        => "food",
+    :games       => "games",
+    :music       => "music",
+    :photography => "photography",
+    :technology  => "technology",
+    :theatre     => "theater",
+    :writing     => "writing%20&%20publishing"
   }
   
   Type = {
@@ -58,16 +58,23 @@ module Kickstarter
   private
   
   def self.list_projects(url, options = {})
+    pages = options.fetch(:pages, 0)
+    pages -= 1 unless pages == 0 || pages == :all
+
     start_page = options.fetch(:page, 1)
-    end_page   = start_page + options.fetch(:pages, 0)
-    
-    results = (start_page..end_page).map do |page|
-      paged_url = url + "?page=#{page}"
-      doc = Nokogiri::HTML(open(paged_url))
-      doc.css('.project').map do |node|
-        project = Kickstarter::Project.new(node)
+    end_page   = pages == :all ? 10000 : start_page + pages
+
+    results = []
+
+    (start_page..end_page).each do |page|
+      doc = Nokogiri::HTML(open("#{url}?page=#{page}"))
+      nodes = doc.css('.project')
+      break if nodes.empty?
+
+      nodes.each do |node|
+        results << Kickstarter::Project.new(node)
       end
     end
-    results.flatten
+    results
   end
 end
