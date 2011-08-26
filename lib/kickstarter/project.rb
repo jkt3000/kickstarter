@@ -51,7 +51,6 @@ module Kickstarter
     def pledge_deadline
       @pledge_deadline ||= begin
         date = node.css('.project-stats li').last.inner_html.to_s
-        puts "parsing date #{date}"
         if date =~ /Funded/
           Date.parse date.split('<strong>Funded</strong>').last.strip
         elsif date =~ /hours left/
