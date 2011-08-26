@@ -67,12 +67,18 @@ module Kickstarter
     results = []
 
     (start_page..end_page).each do |page|
-      doc = Nokogiri::HTML(open("#{url}?page=#{page}"))
-      nodes = doc.css('.project')
-      break if nodes.empty?
+      retries = 0
+      begin
+        doc = Nokogiri::HTML(open("#{url}?page=#{page}"))
+        nodes = doc.css('.project')
+        break if nodes.empty?
 
-      nodes.each do |node|
-        results << Kickstarter::Project.new(node)
+        nodes.each do |node|
+          results << Kickstarter::Project.new(node)
+        end
+      rescue Timeout::Error
+        retries += 1
+        retry if retries < 3
       end
     end
     results
