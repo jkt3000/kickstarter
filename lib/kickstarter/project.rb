@@ -24,7 +24,6 @@ module Kickstarter
       @url ||= File.join(Kickstarter::BASE_URL, link.attribute('href').to_s.split('?').first)
     end
     
-    
     def owner
       @owner ||= node.css('h2 span').first.inner_html.gsub(/by/, "").strip
     end
@@ -44,8 +43,6 @@ module Kickstarter
       @pledge_percent ||= node.css('.project-stats li strong').inner_html.gsub(/\,/,"").to_i
     end
     
-
-
 #     # can be X days|hours left
     # or <strong>FUNDED</strong> Aug 12, 2011
     def pledge_deadline
@@ -61,7 +58,6 @@ module Kickstarter
         end
       end
     end
-    
 
     def to_hash
       {
@@ -81,10 +77,52 @@ module Kickstarter
       to_hash.inspect
     end
     
+    # Details page
+    def details_page
+      @details_page ||= Project.fetch_details(url)
+    end
+    
+    def about
+      if @about.nil?
+        node = details_page.css('#about')
+        node.search("h3.dotty").remove
+        @about = node.inner_html.to_s
+      else
+        @about
+      end
+    end
+    
+    def tiers
+      retries = 0
+      results = []
+      begin
+        nodes = details_page.css('.NS-projects-reward')
+        nodes.each do |node|
+          results << Kickstarter::Tier.new(node)
+        end
+      rescue Timeout::Error
+        retries += 1
+        retry if retries < 3
+      end
+      results
+    end
+    
     private
     
     def link
       node.css('h2 a').first
+    end
+    
+    private
+    
+    def self.fetch_details(url)
+      retries = 0
+      begin
+        Nokogiri::HTML(open(url))
+      rescue Timeout::Error
+        retries += 1
+        retry if retries < 3
+      end
     end
     
   end

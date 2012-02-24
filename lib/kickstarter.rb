@@ -4,6 +4,7 @@ require 'open-uri'
 require 'date'
 require "kickstarter/version"
 require "kickstarter/project"
+require "kickstarter/tier"
 
 module Kickstarter
   BASE_URL = "http://kickstarter.com"  
