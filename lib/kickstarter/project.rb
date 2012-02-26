@@ -50,11 +50,14 @@ module Kickstarter
         date = node.css('.project-stats li').last.inner_html.to_s
         if date =~ /Funded/
           Date.parse date.split('<strong>Funded</strong>').last.strip
-        elsif date =~ /hours left/
+        elsif date =~ /hours? left/
           future = Time.now + date.match(/\d+/)[0].to_i * 60*60
           Date.parse(future.to_s)
         elsif date =~ /days left/
           Date.parse(Time.now.to_s) + date.match(/\d+/)[0].to_i
+        elsif date =~ /minutes? left/
+          future = Time.now + date.match(/\d+/)[0].to_i * 60
+          Date.parse(future.to_s)
         end
       end
     end
