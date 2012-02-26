@@ -9,7 +9,7 @@ module Kickstarter
     end
     
     def minimum_pledge
-      @minimum_pledge ||= Integer(node.css('span').text[/\$[0-9\.]+/].gsub(/\$/,""))
+      @minimum_pledge ||= Integer(node.css('span').text[/\$[0-9\.\,]+/].gsub(/\$/,"").gsub(/\,/,""))
     end
     
     def backer_count

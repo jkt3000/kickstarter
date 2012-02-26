@@ -24,7 +24,8 @@ A Kickstarter::Project has the following attributes:
   
 The following attributes will prompt a load of the project's details page:
   
-  .pledge_goal (not implemented yet - use pledge_percent for now)
+  .pledge_goal
+  .short_url
   .about
   .tiers (returns array of Kickstart::Tier objects)
 

@@ -40,7 +40,7 @@ module Kickstarter
     :most_funded       => "most-funded",
     :curated           => "curated-pages",
   }
-   
+  
   # by category
   # /discover/categories/:category/:subcategories 
   #  :type # => [recommended, popular, successful]

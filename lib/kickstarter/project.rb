@@ -43,7 +43,7 @@ module Kickstarter
       @pledge_percent ||= node.css('.project-stats li strong').inner_html.gsub(/\,/,"").to_i
     end
     
-#     # can be X days|hours left
+    # can be X days|hours left
     # or <strong>FUNDED</strong> Aug 12, 2011
     def pledge_deadline
       @pledge_deadline ||= begin
@@ -80,6 +80,14 @@ module Kickstarter
     # Details page
     def details_page
       @details_page ||= Project.fetch_details(url)
+    end
+    
+    def pledge_goal
+      @pledge_goal ||= Integer(/pledged of \$([0-9\.\,]+) goal/.match(details_page.css("#moneyraised").inner_html)[1].gsub(/,/,""))
+    end
+    
+    def short_url
+      @short_url ||= details_page.css("#share_a_link").attr("value").value
     end
     
     def about
