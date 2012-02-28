@@ -20,9 +20,9 @@ module Kickstarter
     :games       => "games",
     :music       => "music",
     :photography => "photography",
+    :publishing  => "publishing",
     :technology  => "technology",
-    :theatre     => "theater",
-    :writing     => "writing%20&%20publishing"
+    :theatre     => "theater"
   }
   
   Type = {
@@ -77,7 +77,7 @@ module Kickstarter
         nodes.each do |node|
           results << Kickstarter::Project.new(node)
         end
-      rescue Timeout::Error
+      rescue
         retries += 1
         retry if retries < 3
       end
