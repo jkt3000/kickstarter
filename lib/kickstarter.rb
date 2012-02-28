@@ -25,10 +25,11 @@ module Kickstarter
     :theater     => "theater"
   }
   
-  Type = {
+  Types = {
     :recommended => 'recommended', 
     :popular     => 'popular', 
-    :successful  => 'successful'
+    :successful  => 'successful',
+    :most_funded => 'most-funded'
   }
   
   Lists = {
@@ -45,7 +46,7 @@ module Kickstarter
   # /discover/categories/:category/:subcategories 
   #  :type # => [recommended, popular, successful]
   def self.by_category(category, options = {})
-    path = File.join(BASE_URL, 'discover/categories', Categories[category.to_sym], Type[options[:type] || :popular])
+    path = File.join(BASE_URL, 'discover/categories', Categories[category.to_sym], Types[options[:type] || :popular])
     list_projects(path, options)
   end
   
