@@ -57,6 +57,10 @@ module Kickstarter
     list_projects(path, options)
   end
   
+  def self.by_url(url)
+    Kickstarter::Project.new(url)
+  end
+  
   private
   
   def self.list_projects(url, options = {})
@@ -76,7 +80,7 @@ module Kickstarter
         break if nodes.empty?
 
         nodes.each do |node|
-          results << Kickstarter::Project.new(node, :node => true)
+          results << Kickstarter::Project.new(node)
         end
       rescue Timeout::Error
         retries += 1
