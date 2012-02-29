@@ -8,6 +8,10 @@ module Kickstarter
       @node = node
     end
     
+    def id
+      @id ||= /backing\[backer_reward_id\]\=([0-9]+)/.match(node.css('h3 a').attr('href').value)[1].to_i
+    end
+    
     def minimum_pledge
       @minimum_pledge ||= Integer(node.css('span').text[/\$[0-9\.\,]+/].gsub(/\$/,"").gsub(/\,/,""))
     end
@@ -44,6 +48,7 @@ module Kickstarter
     
     def to_hash
       {
+        :id                 => id,
         :minimum_pledge     => minimum_pledge,
         :backer_count       => backer_count,
         :description        => description,

@@ -26,8 +26,8 @@ module Kickstarter
   }
   
   Types = {
-    :recommended => 'recommended', 
-    :popular     => 'popular', 
+    :popular     => 'popular',
+    :recommended => 'recommended',
     :successful  => 'successful',
     :most_funded => 'most-funded'
   }
@@ -76,9 +76,9 @@ module Kickstarter
         break if nodes.empty?
 
         nodes.each do |node|
-          results << Kickstarter::Project.new(node)
+          results << Kickstarter::Project.new(node, :node => true)
         end
-      rescue
+      rescue Timeout::Error
         retries += 1
         retry if retries < 3
       end
