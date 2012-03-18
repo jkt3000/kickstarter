@@ -62,6 +62,25 @@ module Kickstarter
       end
     end
     
+    def backers
+      extended_project.css('#moneyraised .num').inner_html.to_i
+    end 
+
+    def rewards
+      rewards = extended_project.css('.NS-projects-reward')
+
+      cleaned_rewards = []
+      rewards.each do |reward|
+        cleaned_rewards << {
+          :title => reward.css('h3 span').inner_html.to_s,
+          :backers => reward.css('.num-backers').inner_html.to_i,
+          :details => reward.css('.desc p').inner_html.to_s
+        }   
+      end 
+
+      cleaned_rewards
+    end 
+    
 
     def to_hash
       {
@@ -85,6 +104,14 @@ module Kickstarter
     
     def link
       node.css('h2 a').first
+    end
+    
+    def extended_project
+      @extended_project ||= load_extended_project
+    end
+
+    def load_extended_project
+      doc = Nokogiri::HTML(open(url))
     end
     
   end
