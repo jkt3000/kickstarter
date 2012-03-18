@@ -21,6 +21,8 @@ A Kickstart::Project has the following attributes:
   .pledge_amount
   .pledge_precent
   .pledge_deadline
+  .rewards
+  .backers
   
 and methods:
   (future)
