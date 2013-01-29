@@ -84,20 +84,7 @@ module Kickstarter
     # or <strong>FUNDED</strong> Aug 12, 2011
     def pledge_deadline
       if node
-        @pledge_deadline ||= begin
-          date = node.css('.project-stats li').last.inner_html.to_s
-          if date =~ /Funded/
-            Date.parse date.split('<strong>Funded</strong>').last.strip
-          elsif date =~ /hours? left/
-            future = Time.now + date.match(/\d+/)[0].to_i * 60*60
-            Date.parse(future.to_s)
-          elsif date =~ /days left/
-            Date.parse(Time.now.to_s) + date.match(/\d+/)[0].to_i
-          elsif date =~ /minutes? left/
-            future = Time.now + date.match(/\d+/)[0].to_i * 60
-            Date.parse(future.to_s)
-          end
-        end
+        @pledge_deadline ||= Time.parse(node.css(".ksr_page_timer").attr("data-end_time").value)
       else
         @pledge_deadline ||= exact_pledge_deadline.to_date
       end
@@ -114,7 +101,8 @@ module Kickstarter
         :pledge_amount   => pledge_amount,
         :pledge_percent  => pledge_percent,
         :pledge_deadline => pledge_deadline.to_s,
-        :thumbnail_url   => thumbnail_url
+        :thumbnail_url   => thumbnail_url,
+        :short_url       => short_url
       }
       if node.nil? #we are working with the details page only
         extra_values = {
@@ -141,7 +129,7 @@ module Kickstarter
     end
     
     def pledge_goal
-      @pledge_goal ||= Integer(/pledged of \$([0-9\.\,]+) goal/.match(details_page.css("#moneyraised").inner_html)[1].gsub(/,/,""))
+      @pledge_goal ||= Integer(/pledged of \$([0-9\.\,]+) goal/.match(node.css("#moneyraised").inner_html)[1].gsub(/,/,""))
     end
     
     def exact_pledge_deadline
