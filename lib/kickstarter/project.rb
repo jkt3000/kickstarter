@@ -40,6 +40,10 @@ module Kickstarter
       end
     end
     
+    def category
+      @category ||= node.css('.category').attribute('data-project-parent-category').value.strip
+    end
+
     def handle
       @handle ||= url.split('/projects/').last.gsub(/\/$/,"")
     end
