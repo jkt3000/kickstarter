@@ -100,6 +100,7 @@ module Kickstarter
         :name            => name,
         :handle          => handle,
         :url             => url,
+        :category        => category,
         :description     => description,
         :owner           => owner,
         :pledge_amount   => pledge_amount,
