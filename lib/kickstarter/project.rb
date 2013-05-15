@@ -42,7 +42,7 @@ module Kickstarter
     
     def category
       # @category ||= node.css('.category').attribute('data-project-parent-category').value.strip
-      @category ||= node.css('.category a').children[1].text.strip
+      @category ||= details_page.css('.category a').children[1].text.strip
     end
 
     def handle
