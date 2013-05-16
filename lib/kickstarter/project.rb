@@ -60,7 +60,7 @@ module Kickstarter
     def thumbnail_url
       @thumbnail_url ||= begin
         if node
-          node.css('.project-thumbnail img').first.attribute('src').value
+          node.css('.project-thumbnail img').attribute('src').value
         end
       end
     end
