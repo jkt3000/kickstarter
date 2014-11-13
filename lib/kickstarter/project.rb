@@ -26,7 +26,8 @@ module Kickstarter
     end
     
     def name
-      @name ||= node ? node_link.inner_html : details_page.css("#headrow h1#name a").inner_html
+      # @name ||= node ? node_link.inner_html : details_page.css("#headrow h1#name a").inner_html
+      @name ||= doc.css('.title .green-dark')[0].children[0].text
     end
     
     def description
