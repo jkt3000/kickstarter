@@ -27,7 +27,8 @@ module Kickstarter
     
     def name
       # @name ||= node ? node_link.inner_html : details_page.css("#headrow h1#name a").inner_html
-      @name ||= doc.css('.title .green-dark')[0].children[0].text
+      @name ||= node.css('.project-title a')[0].children[0].text
+
     end
     
     def description
@@ -36,7 +37,8 @@ module Kickstarter
     
     def url
       @url ||= begin
-        path = node ? node_link.attribute('href').to_s : details_page.css("#headrow h1#name a").attr("href").value
+        path = node ? node.css('.project-title a').attr('href').value.to_s : details_page.css("#headrow h1#name a").attr("href").value
+        # path = node ? node_link.attribute('href').to_s : details_page.css("#headrow h1#name a").attr("href").value
         File.join(Kickstarter::BASE_URL, path.split('?').first)
       end
     end
@@ -53,7 +55,8 @@ module Kickstarter
     def owner
       @owner ||= begin
         if node
-          node.css('h2 span').first.inner_html.gsub(/by/, "").strip
+          # node.css('h2 span').first.inner_html.gsub(/by/, "").strip
+          node.css('.project-card-interior p').children[0].text[4..-2]
         end
       end
     end
@@ -180,7 +183,8 @@ module Kickstarter
     attr_reader :seed_url
     
     def node_link
-      node.css('h2 a').first
+      # node.css('h2 a').first
+      node.css('project-title a').first
     end
     
     def self.fetch_details(url)
