@@ -8,7 +8,7 @@ require "kickstarter/project"
 require "kickstarter/tier"
 
 module Kickstarter
-  BASE_URL = "http://kickstarter.com"  
+  BASE_URL = "http://www.kickstarter.com"  
   
   Categories = {
     :art         => "art",
@@ -62,6 +62,32 @@ module Kickstarter
     Kickstarter::Project.new(url)
   end
   
+  #https://www.kickstarter.com/discover/advanced?state=live&woe_id=23424977&raised=1&sort=end_date
+  def self.by_list_ending_soon(options = {})
+    new_path = "advanced?state=live&raised=1&sort=end_date"
+    path = File.join(BASE_URL, 'discover', new_path)
+    # list_projects(path, options)
+
+    # TRYING TO WRITE MY OWN!
+    pages = options.fetch(:pages, 0)
+    pages = pages - 1 unless pages == 0 || pages == :all
+
+    start_page = options.fetch(:page, 1)
+    end_page = pages == :all ? 15 : start_page + pages
+
+    results = []
+
+    (start_page..end_page).each do |page|
+      local_path = path + "&page=#{page}";
+
+      nodes = Nokogiri::HTML(open(local_path, :allow_redirections => :safe)).css('.project')
+      nodes.each do |node|
+        results << Kickstarter::Project.new(node)
+      end
+    end
+    results
+  end
+
   private
   
   def self.list_projects(url, options = {})
