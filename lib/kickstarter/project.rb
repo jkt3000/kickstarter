@@ -45,7 +45,16 @@ module Kickstarter
     
     def category
       # @category ||= node.css('.category').attribute('data-project-parent-category').value.strip
-      @category ||= details_page.css('.category a').children[1].text.strip
+      # @category ||= details_page.css('.category a').children[1].text.strip
+
+      c_array = details_page.css('.grey-dark').css('.mr3').css('.nowrap')[1].attribute('href').value[21..-14].split('/')
+      if (c_array.length > 1)
+        c_array[0] = c_array[0].split('%20').each { |c| c.capitalize! }.join(' ')
+        c_array[1] = c_array[1].split('%20').each { |c| c.capitalize! }.join(' ')
+        @category ||= c_array.join('/')
+      else
+        @category ||= c_array.first.capitalize
+      end
     end
 
     def handle
@@ -56,7 +65,8 @@ module Kickstarter
       @owner ||= begin
         if node
           # node.css('h2 span').first.inner_html.gsub(/by/, "").strip
-          node.css('.project-card-interior p').children[0].text[4..-2]
+          # node.css('.project-card-interior p').children[0].text[4..-2]
+          node.css('.project-byline').children.text[4..-2]
         end
       end
     end
