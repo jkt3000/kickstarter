@@ -10,7 +10,7 @@ Usage:
     # => returns back an array of 3 pages worth of projects, starting from page 2
 
 
-A Kickstart::Project has the following attributes:
+A Kickstarter::Project has the following attributes:
   .name
   .handle
   .description
@@ -19,15 +19,26 @@ A Kickstart::Project has the following attributes:
   .email
   .thumbnail_url
   .pledge_amount
-  .pledge_precent
+  .pledge_percent
   .pledge_deadline
   
-and methods:
-  (future)
-  .details => get more details from about the project, from the Project details page
+The following attributes will prompt a load of the project's details page:
+  
+  .pledge_goal
+  .short_url
+  .about
+  .tiers (returns array of Kickstart::Tier objects)
+
+A Kickstarter::Tier has the following attributes:
+  .minimum_pledge
+  .backer_count
+  .description
+  .limited
+  .limited_max
+  .limited_remaining
+  .estimated_delivery  
   
 Options:
-
   :page => X    # which page number of results to return. May be empty
   :pages => Y   # number of pages worth of results. Don't be stupid and request too many pages...
 
